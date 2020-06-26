@@ -8,7 +8,7 @@ source venv file:
 `source venv/bin/activate`
 
 install python requirements:
-`pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 
 ### Usage
