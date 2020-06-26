@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-import mechanicalsoup
 from bs4 import BeautifulSoup
-import datetime
 import sqlite3
 import sys
 import os
