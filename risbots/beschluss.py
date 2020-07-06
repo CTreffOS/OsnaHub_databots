@@ -26,6 +26,9 @@ sitzungen =  db.fetchall()
 for sitzung in sitzungen:
     _, beschreibung, _, datum_zeit, fachbereich, tagesordnung_url = sitzung
 
+    if not tagesordnung_url:
+        sys.exit(0)
+
     if mastodon_api is None:
         if not os.path.isfile(instance+'.secret'):
             if Mastodon.create_app(
