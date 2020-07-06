@@ -62,8 +62,7 @@ for sitzung in sitzungen:
     out.append(beschreibung)
     out.append(datum_zeit)
     out.append("Fachbereich: #" +  fachbereich.replace(" ", "_").replace(",", ""))
-    if tagesordnung_url:
-        out.append("Tagesordnung: " + tagesordnung_url)
+    out.append("Tagesordnung: " + tagesordnung_url)
 
 
     toot = "\n".join(out)
