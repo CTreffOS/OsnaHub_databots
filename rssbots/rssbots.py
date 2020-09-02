@@ -21,3 +21,6 @@ rss2toot.toot('https://www.feuerwehrnews-os.de/feed', 'https://osna.social', app
 print("IGMetall")
 rss2toot.toot('https://www.igmetall-osnabrueck.de/rss.xml', 'https://osna.social', appname='igmetall')
 
+print("NOZ")
+rss2toot.toot('https://www.noz.de/rss/ressort/Osnabr%C3%BCck', 'https://osna.social', appname='noz')
+
