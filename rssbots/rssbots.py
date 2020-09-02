@@ -24,3 +24,14 @@ rss2toot.toot('https://www.igmetall-osnabrueck.de/rss.xml', 'https://osna.social
 print("NOZ")
 rss2toot.toot('https://nitter.net/noz_os/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='noz')
 
+print("VOS")
+rss2toot.toot('https://nitter.net/vos_info/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='vos')
+
+print("Zoo")
+rss2toot.toot('https://nitter.net/ZooOsnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='zoo')
+
+print("HS")
+rss2toot.toot('https://nitter.net/HS_Osnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='hs')
+
+print("Kreis")
+rss2toot.toot('https://nitter.net/lkosnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='kreis')
