@@ -22,16 +22,16 @@ print("IGMetall")
 rss2toot.toot('https://www.igmetall-osnabrueck.de/rss.xml', 'https://osna.social', appname='igmetall')
 
 print("NOZ")
-rss2toot.toot('https://nitter.net/noz_os/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='noz')
+rss2toot.toot('https://nitter.net/noz_os/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='noz')
 
 print("VOS")
-rss2toot.toot('https://nitter.net/vos_info/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='vos')
+rss2toot.toot('https://nitter.net/vos_info/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='vos')
 
 print("Zoo")
-rss2toot.toot('https://nitter.net/ZooOsnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='zoo')
+rss2toot.toot('https://nitter.net/ZooOsnabrueck/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='zoo')
 
 print("HS")
-rss2toot.toot('https://nitter.net/HS_Osnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='hs')
+rss2toot.toot('https://nitter.net/HS_Osnabrueck/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='hs')
 
 print("Kreis")
-rss2toot.toot('https://nitter.net/lkosnabrueck/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='kreis')
+rss2toot.toot('https://nitter.net/lkosnabrueck/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='kreis')
