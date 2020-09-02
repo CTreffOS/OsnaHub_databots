@@ -15,14 +15,8 @@ rss2toot.toot('https://www.kooperationsstelle-osnabrueck.de/news.xml', 'https://
 print("NDR-Podcast")
 rss2toot.toot('https://www.ndr.de/ndr1niedersachsen/podcast4654.xml', 'https://osna.social', appname='ndr-podcast')
 
-print("Polizei")
-rss2toot.toot('https://www.presseportal.de/rss/dienststelle_104236.rss2', 'https://osna.social', appname='polizei')
-
 print("Feuerwehr")
 rss2toot.toot('https://www.feuerwehrnews-os.de/feed', 'https://osna.social', appname='feuerwehr')
-
-print("Zoll")
-rss2toot.toot('https://www.presseportal.de/rss/dienststelle_121236.rss2', 'https://osna.social', appname='zoll')
 
 print("IGMetall")
 rss2toot.toot('https://www.igmetall-osnabrueck.de/rss.xml', 'https://osna.social', appname='igmetall')
