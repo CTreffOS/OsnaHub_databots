@@ -22,5 +22,5 @@ print("IGMetall")
 rss2toot.toot('https://www.igmetall-osnabrueck.de/rss.xml', 'https://osna.social', appname='igmetall')
 
 print("NOZ")
-rss2toot.toot('https://nitter.net/noz_os/rss', 'https://osna.social', appname='noz')
+rss2toot.toot('https://nitter.net/noz_os/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='noz')
 
