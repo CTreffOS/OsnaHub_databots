@@ -35,3 +35,6 @@ rss2toot.toot('https://nitter.net/HS_Osnabrueck/search/rss?f=tweets&e-replies=on
 
 print("Kreis")
 rss2toot.toot('https://nitter.net/lkosnabrueck/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='kreis')
+
+print("ADFC")
+rss2toot.toot('https://nitter.net/adfc_os/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='adfc')
