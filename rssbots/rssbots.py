@@ -3,8 +3,8 @@ import rss2toot
 print("VFL")
 rss2toot.toot('https://www.vfl.de/feed/', 'https://osna.social', appname='vfl')
 
-print("Stadt")
-rss2toot.toot('https://www.osnabrueck.de/index.php?id=index&type=9818&type=9818', 'https://osna.social', appname='stadt')
+#print("Stadt")
+#rss2toot.toot('https://www.osnabrueck.de/index.php?id=index&type=9818&type=9818', 'https://osna.social', appname='stadt')
 
 print("Uni")
 rss2toot.toot('https://www.uni-osnabrueck.de/kommunikation/kommunikation-und-marketing-angebot-und-aufgaben/pressestelle/pressemeldungen/?no_cache=1&type=9818', 'https://osna.social', appname='uni')
