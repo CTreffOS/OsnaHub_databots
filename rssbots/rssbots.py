@@ -41,3 +41,6 @@ rss2toot.toot('https://nitter.net/adfc_os/search/rss?f=tweets&e-replies=on&e-nat
 
 print("Polizei")
 rss2toot.toot('https://nitter.net/Polizei_OS/search/rss?f=tweets&e-replies=on&e-nativeretweets=on', 'https://osna.social', appname='polizei')
+
+print("CCC Events")
+rss2toot.toot('https://events.ccc.de/feed/', 'https://chaos.social', appname='events')
