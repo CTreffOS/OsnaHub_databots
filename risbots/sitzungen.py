@@ -15,7 +15,7 @@ instance = "" # Mastodon Instance
 
 get_query = """SELECT id, beschreibung, datum_zeit, fachbereich, tagesordnung_url
             FROM sitzungen WHERE date(datum_zeit) <= date('now','+7 day')
-            AND date(datum_zeit) > date('now')
+            AND date(datum_zeit) >= date('now')
             AND toot_status = 0;"""
 
 mastodon_api = None

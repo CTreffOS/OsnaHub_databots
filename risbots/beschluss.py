@@ -8,26 +8,29 @@ from mastodon import Mastodon
 import urllib.request as urllib3
 
 
-
-sql = sqlite3.connect('tootbot.db')
+sql = sqlite3.connect('ris.db')
 db = sql.cursor()
 
-mastodon = sys.argv[1]
-passwd = sys.argv[2]
-instance = sys.argv[3]
+mastodon = "" # Bot mail
+passwd = "" # Bot Paswort
+instance = "" # Mastodon Instance
 
 mastodon_api = None
 
+get_sitzung_query = """SELECT id, beschreibung, datum_zeit, fachbereich, tagesordnung_url
+                       FROM sitzungen
+                       WHERE date(datum_zeit) <= date('now','+3 day')
+                       AND date(datum_zeit) >= date('now')
+                       AND tagesordnung_url!=''
+                       AND toot_status<2;"""
 
-db.execute("SELECT * FROM toots WHERE date(datum_zeit) = date('now','+2 day')")
 
-sitzungen =  db.fetchall()
+
+db.execute(get_sitzung_query)
+
+sitzungen = db.fetchall()
 
 for sitzung in sitzungen:
-    _, beschreibung, _, datum_zeit, fachbereich, tagesordnung_url = sitzung
-
-    if not tagesordnung_url:
-        sys.exit(0)
 
     if mastodon_api is None:
         if not os.path.isfile(instance+'.secret'):
@@ -57,6 +60,12 @@ for sitzung in sitzungen:
             print("ERROR: First Login Failed!")
             sys.exit(1)
 
+    id, beschreibung, datum_zeit, fachbereich, tagesordnung_url = sitzung
+
+    db.execute('''UPDATE sitzungen SET toot_status = '{}' WHERE ID = {};
+               '''.format(2, id))
+    sql.commit()
+
 
     out = []
     out.append(beschreibung)
@@ -72,72 +81,41 @@ for sitzung in sitzungen:
                              visibility='unlisted',
                              spoiler_text=None)
 
-    try:
-        tagesordnung_html =  urllib3.urlopen(tagesordnung_url)
-    except:
-        print("No connection to Tagesordnung")
+    db.execute("SELECT beschluss FROM beschluss WHERE sitzungen_id={}".format(id))
+    beschluesse = db.fetchall()
+    for beschluss in beschluesse:
+        beschluss = beschluss[0].split(" ")
 
-    tagesordnung =  BeautifulSoup(tagesordnung_html, features="html.parser")
-
-    table = tagesordnung.find('table', {"class": "tl1"})
-    rows = table.find_all('tr',  class_=["zl11", "zl12"])
-
-    for row in rows:
-        if row is not None:
-            tds = row.find_all("td")
-            if not tds[5].string:
-                continue
-
-            v_link = tds[5].find("a")
-            if not v_link:
-                continue
-
-            if  v_link["href"][:2] != "vo":
-                continue
-
-            try:
-                vorlage_html =  urllib3.urlopen("https://ris.osnabrueck.de/bi/" + tds[5].find("a")["href"])
-            except:
-                print("No connection to Vorlage")
-
-            vorlage =  BeautifulSoup(vorlage_html, features="html.parser")
-            if vorlage.div.p.span.text == "Beschluss:":
-                beschluss = vorlage.find("table", class_="risdeco").div.text
-                beschluss = beschluss.replace("\xa0", "")
-                beschluss = beschluss.replace("Beschluss:", "")
-                beschluss = beschluss.split(" ")
-
-                sub_toots = []
-                tmp_toot = "Beschluss:"
-                for x in beschluss:
-                    # +1 wegen den Leerzeichen und 8 Zeich Platz für "(10/11) "
-                    if len(tmp_toot) + len(x) + 2 <= 500 - 8:
-                        tmp_toot = tmp_toot + " " + x
-                    else:
-                        sub_toots.append(tmp_toot)
-                        tmp_toot = x
-
+        sub_toots = []
+        tmp_toot = "Beschluss:"
+        for x in beschluss:
+            # +1 wegen den Leerzeichen und 8 Zeich Platz für "(10/11) "
+            if len(tmp_toot) + len(x) + 2 <= 500 - 8:
+                tmp_toot = tmp_toot + " " + x
+            else:
                 sub_toots.append(tmp_toot)
+                tmp_toot = x
 
-                i = 0
-                anzahl = len(sub_toots)
-                for sub_toot in sub_toots:
-                    i = i + 1
-                    nr = "(%i/%i) " % (i, anzahl)
+        sub_toots.append(tmp_toot)
 
-                    poll = None
-                    if i == anzahl:
-                        poll = mastodon_api.make_poll(
-                                ["Finde ich gut",
-                                 "Finde ich nicht gut",
-                                 "Bin mir Unsicher"],
-                                 60*60*24*7) # 7 Tage in Sekunden
+        i = 0
+        anzahl = len(sub_toots)
+        for sub_toot in sub_toots:
+            i = i + 1
+            nr = "(%i/%i) " % (i, anzahl)
+
+            poll = None
+            if i == anzahl:
+                poll = mastodon_api.make_poll(
+                        ["Finde ich gut",
+                         "Finde ich nicht gut",
+                         "Bin mir Unsicher"],
+                         60*60*24*7) # 7 Tage in Sekunden
 
 
-                    mastodon_api.status_post(nr + sub_toot, sensitive=False,
-                                             in_reply_to_id=main_toot["id"],
-                                             poll=poll,
-                                             visibility='unlisted',
-                                             spoiler_text=None)
-
+            mastodon_api.status_post(nr + sub_toot, sensitive=False,
+                                     in_reply_to_id=main_toot["id"],
+                                     poll=poll,
+                                     visibility='unlisted',
+                                     spoiler_text=None)
 
