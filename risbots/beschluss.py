@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
-from bs4 import BeautifulSoup
 import sqlite3
 import sys
 import os
 from mastodon import Mastodon
-import urllib.request as urllib3
+import datetime
 
 
 sql = sqlite3.connect('ris.db')
@@ -23,7 +22,6 @@ get_sitzung_query = """SELECT id, beschreibung, datum_zeit, fachbereich, tagesor
                        AND date(datum_zeit) >= date('now')
                        AND tagesordnung_url!=''
                        AND toot_status<2;"""
-
 
 
 db.execute(get_sitzung_query)
@@ -100,6 +98,8 @@ for sitzung in sitzungen:
 
         i = 0
         anzahl = len(sub_toots)
+        poll_time = datetime.datetime.strptime(datum_zeit, "%Y-%m-%d %H:%M:%S") - datetime.datetime.now() - datetime.timedelta(hours=2)
+        poll_time = int(poll_time.total_seconds())
         for sub_toot in sub_toots:
             i = i + 1
             nr = "(%i/%i) " % (i, anzahl)
@@ -110,7 +110,7 @@ for sitzung in sitzungen:
                         ["Finde ich gut",
                          "Finde ich nicht gut",
                          "Bin mir Unsicher"],
-                         60*60*24*7) # 7 Tage in Sekunden
+                         poll_time)
 
 
             mastodon_api.status_post(nr + sub_toot, sensitive=False,
